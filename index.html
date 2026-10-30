@@ -34,8 +34,8 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
         th, td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border-color); }
         th { color: var(--text-muted); font-size: 0.75rem; }
-        input[type="number"], input[type="password"] { background-color: #121214; border: 1px solid var(--border-color); color: #fff; padding: 6px; border-radius: 4px; width: 70px; text-align: center; }
-        .input-login { width: 100% !important; padding: 12px !important; font-size: 1.2rem; margin-bottom: 12px; box-sizing: border-box; }
+        input[type="text"], input[type="number"] { background-color: #121214; border: 1px solid var(--border-color); color: #fff; padding: 6px; border-radius: 4px; width: 70px; text-align: center; }
+        .input-login { width: 100% !important; padding: 12px !important; font-size: 1.2rem; margin-bottom: 12px; box-sizing: border-box; text-align: center !important; }
         .input-caixa { width: 100% !important; padding: 10px !important; font-size: 1.1rem !important; background-color: #121214; border: 1px solid var(--accent-green); color: #fff; border-radius: 6px; box-sizing: border-box; text-align: right; font-weight: bold; }
         .led-green { height: 10px; width: 10px; background-color: var(--accent-green); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--accent-green); animation: piscar 1.5s infinite; }
         .led-red { height: 10px; width: 10px; background-color: var(--accent-red); border-radius: 50%; display: inline-block; }
@@ -56,10 +56,11 @@
     <!-- LOGIN -->
     <div id="login-screen" class="card">
         <h2>🔒 Acesso Restrito</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Insira a senha PIN para aceder ao Radar da Filha:</p>
-        <input type="password" id="pin-input" class="input-login" placeholder="Digite a senha (1928)" onkeypress="if(event.key === 'Enter') verificarSenha()">
-        <button class="btn" onclick="verificarSenha()">Entrar no Sistema</button>
-        <p id="erro-msg" style="color: var(--accent-red); font-size: 0.85rem; margin-top: 10px; display: none;">Senha incorreta!</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Insira a senha PIN (1928):</p>
+        <!-- Alterado para type="text" para ver o que digita e evitar erros -->
+        <input type="text" id="pin-input" class="input-login" placeholder="Digite 1928">
+        <button class="btn" onclick="fazerLogin()">Entrar no Sistema</button>
+        <p id="erro-msg" style="color: var(--accent-red); font-size: 0.85rem; margin-top: 10px; display: none;">Senha incorreta! Use 1928</p>
     </div>
 
     <!-- APP -->
@@ -98,13 +99,13 @@
         </div>
 
         <div class="card">
-            <h2>🎯 Semáforo de Oportunidades (Tempo Real)</h2>
+            <h2>🎯 Semáforo de Oportunidades</h2>
             <table>
                 <thead>
                     <tr><th>Status</th><th>Ativo</th><th>Preço Atual</th><th>Alvo Ideal</th><th>Ação</th></tr>
                 </thead>
                 <tbody id="tabela-semaforo">
-                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">A carregar cotações...</td></tr>
+                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">A carregar...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -121,15 +122,17 @@
     const SENHA_MESTRE = "2806";
     const URL_API_GOOGLE = "https://script.google.com/macros/s/AKfycbxl-4aetmoP0e8M7lD0TNNIJ9zP_9C_tE99N8ODMVhSo-kF2tVHEUXqkdMjvhqNKKpG/exec";
 
-    function verificarSenha() {
-        let senhaDigitada = document.getElementById("pin-input").value;
-        if (senhaDigitada === SENHA_MESTRE) {
+    function fazerLogin() {
+        let valorDigitado = document.getElementById("pin-input").value.trim();
+        if (valorDigitado === SENHA_MESTRE) {
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("app-content").style.display = "block";
             carregarCustodia();
             buscarPrecosReais();
         } else {
-            document.getElementById("erro-msg").style.display = "block";
+            let erro = document.getElementById("erro-msg");
+            erro.style.display = "block";
+            erro.innerText = "Senha incorreta! Digitou: " + valorDigitado;
         }
     }
 
@@ -148,16 +151,14 @@
         try {
             let response = await fetch(URL_API_GOOGLE);
             let precosReais = await response.json();
-            
             ativos.forEach(item => {
                 if (precosReais[item.ticker]) {
                     item.preco = parseFloat(precosReais[item.ticker]);
                 }
             });
         } catch (e) {
-            console.log("Mantendo preços padrão de referência local.");
+            console.log("Usando preços locais.");
         }
-
         carregarCustodia();
         carregarSemaforo();
     }
