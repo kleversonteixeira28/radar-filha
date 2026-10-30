@@ -94,7 +94,7 @@
             color: #fff;
             padding: 6px;
             border-radius: 4px;
-            width: 60px;
+            width: 70px;
             text-align: center;
         }
         .input-login {
@@ -103,6 +103,40 @@
             font-size: 1.2rem;
             margin-bottom: 12px;
             box-sizing: border-box;
+        }
+        .input-caixa {
+            width: 100% !important;
+            padding: 10px !important;
+            font-size: 1.1rem !important;
+            background-color: #121214;
+            border: 1px solid var(--accent-green);
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            text-align: right;
+            font-weight: bold;
+        }
+        /* LED PISCANDO EM VERDE */
+        .led-green {
+            height: 10px;
+            width: 10px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: piscar 1.5s infinite;
+        }
+        .led-red {
+            height: 10px;
+            width: 10px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            display: inline-block;
+        }
+        @keyframes piscar {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
         .badge {
             padding: 2px 6px;
@@ -148,6 +182,13 @@
         <h1>📈 Radar Bola de Neve</h1>
         <p class="subtitle">Carteira de Longo Prazo — Gestão da Filha</p>
 
+        <!-- CAIXA E APORTE DISPONÍVEL -->
+        <div class="card">
+            <h2>💵 Valor Disponível para Aporte</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Digite quanto tem livre (Caixa + Pix + Vendas):</p>
+            <input type="number" id="valor-disponivel" class="input-caixa" value="310.10" step="0.01" onchange="recalcular()">
+        </div>
+
         <!-- RESUMO DINÂMICO -->
         <div class="card">
             <h2>💰 Raio-X do Património</h2>
@@ -166,7 +207,6 @@
         <!-- CARTEIRA E QUANTIDADES -->
         <div class="card">
             <h2>📊 Suas Cotas e Custódia</h2>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Altere as quantidades conforme os seus ativos na XP:</p>
             <table>
                 <thead>
                     <tr>
@@ -183,35 +223,35 @@
             <button class="btn" onclick="recalcular()">Atualizar Valores</button>
         </div>
 
-        <!-- SEMÁFORO DE OPORTUNIDADES -->
+        <!-- SEMÁFORO DE OPORTUNIDADES COM LED -->
         <div class="card">
             <h2>🎯 Semáforo de Oportunidades (B3)</h2>
             <table>
                 <thead>
                     <tr>
+                        <th>Status</th>
                         <th>Ativo</th>
                         <th>Preço Atual</th>
                         <th>Alvo Ideal</th>
-                        <th>Status</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>XPML11</strong></td><td>R$ 96,25</td><td>≤ R$ 96,50</td><td><span class="badge badge-buy">COMPRAR</span></td></tr>
-                    <tr><td><strong>BTLG11</strong></td><td>R$ 97,90</td><td>≤ R$ 98,00</td><td><span class="badge badge-buy">COMPRAR</span></td></tr>
-                    <tr><td><strong>MXRF11</strong></td><td>R$ 8,89</td><td>≤ R$ 9,00</td><td><span class="badge badge-buy">ACUMULAR</span></td></tr>
-                    <tr><td><strong>GARE11</strong></td><td>R$ 8,80</td><td>≤ R$ 8,90</td><td><span class="badge badge-buy">NOVO ALVO</span></td></tr>
-                    <tr><td><strong>BBAS3</strong></td><td>R$ 16,54</td><td>≤ R$ 16,60</td><td><span class="badge badge-buy">OPORTUNIDADE</span></td></tr>
-                    <tr><td><strong>VVCO11</strong></td><td>R$ 10,10</td><td>Saída</td><td><span class="badge badge-sell">VENDER</span></td></tr>
+                    <tr><td><span class="led-green"></span></td><td><strong>XPML11</strong></td><td>R$ 96,25</td><td>≤ R$ 96,50</td><td><span class="badge badge-buy">COMPRAR</span></td></tr>
+                    <tr><td><span class="led-green"></span></td><td><strong>BTLG11</strong></td><td>R$ 97,90</td><td>≤ R$ 98,00</td><td><span class="badge badge-buy">COMPRAR</span></td></tr>
+                    <tr><td><span class="led-green"></span></td><td><strong>MXRF11</strong></td><td>R$ 8,89</td><td>≤ R$ 9,00</td><td><span class="badge badge-buy">ACUMULAR</span></td></tr>
+                    <tr><td><span class="led-green"></span></td><td><strong>GARE11</strong></td><td>R$ 8,80</td><td>≤ R$ 8,90</td><td><span class="badge badge-buy">NOVO ALVO</span></td></tr>
+                    <tr><td><span class="led-green"></span></td><td><strong>BBAS3</strong></td><td>R$ 16,54</td><td>≤ R$ 16,60</td><td><span class="badge badge-buy">OPORTUNIDADE</span></td></tr>
+                    <tr><td><span class="led-red"></span></td><td><strong>VVCO11</strong></td><td>R$ 10,10</td><td>Saída</td><td><span class="badge badge-sell">VENDER</span></td></tr>
                 </tbody>
             </table>
         </div>
 
         <!-- PLANO DE SEGUNDA -->
         <div class="card">
-            <h2>📝 Execução de Segunda-Feira</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-                Orçamento de <b>R$ 310,10</b> (Pix R$ 170,18 + Caixa R$ 129,82 + Venda VVCO11 R$ 10,10).<br>
-                <b>Alvo:</b> 1x XPML11 + 1x BTLG11 + 12x MXRF11 + Troco em KISU11.
+            <h2>📝 Sugestão de Execução com o Saldo</h2>
+            <p id="sugestao-aporte" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                Calculando sugestão com base no valor disponível...
             </p>
         </div>
     </div>
@@ -219,8 +259,8 @@
 </div>
 
 <script>
-    // DEFINA A SUA SENHA PIN AQUI:
-    const SENHA_MESTRE = "2806"; // Pode alterar para o número que preferir!
+    // PIN DE ACESSO
+    const SENHA_MESTRE = "2806";
 
     function verificarSenha() {
         let digitada = document.getElementById("pin-input").value;
@@ -271,7 +311,6 @@
                 document.getElementById(`total_${index}`).innerText = `R$ ${subtotal.toFixed(2)}`;
                 patrimonioTotal += subtotal;
 
-                // Estimativa simplificada de proventos mensais por ativo
                 if (item.ticker === "MXRF11") rendaEstimada += item.qtd * 0.10;
                 if (item.ticker === "XPML11") rendaEstimada += item.qtd * 0.92;
                 if (item.ticker === "BTLG11") rendaEstimada += item.qtd * 0.81;
@@ -282,6 +321,22 @@
 
         document.getElementById("patrimonio-total").innerText = `R$ ${patrimonioTotal.toFixed(2)}`;
         document.getElementById("renda-mensal").innerText = `R$ ${rendaEstimada.toFixed(2)}`;
+
+        // Sugestão baseada no valor disponível digitado
+        let disponivel = parseFloat(document.getElementById("valor-disponivel").value) || 0;
+        let txtSugestao = `Com <b>R$ ${disponivel.toFixed(2)}</b> disponíveis, a alocação recomendada para segunda-feira é:<br>`;
+        txtSugestao += `• <b>1x XPML11</b> (~R$ 96,25)<br>`;
+        txtSugestao += `• <b>1x BTLG11</b> (~R$ 97,90)<br>`;
+        let resto = disponivel - 96.25 - 97.90;
+        if (resto > 0) {
+            let qtdMx = Math.floor(resto / 8.89);
+            txtSugestao += `• <b>${qtdMx}x MXRF11</b> (~R$ ${(qtdMx * 8.89).toFixed(2)})<br>`;
+            let trocoFinal = resto - (qtdMx * 8.89);
+            txtSugestao += `• <b>Troco em caixa:</b> R$ ${trocoFinal.toFixed(2)}`;
+        } else {
+            txtSugestao += `<i>Valor insuficiente para o combo completo. Priorize MXRF11 ou KISU11.</i>`;
+        }
+        document.getElementById("sugestao-aporte").innerHTML = txtSugestao;
     }
 </script>
 
