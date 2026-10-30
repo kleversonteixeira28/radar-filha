@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Bola de Neve — Carteira da Filha</title>
+    <style>
+        :root {
+            --bg-color: #121214;
+            --card-bg: #202024;
+            --text-color: #e1e1e6;
+            --text-muted: #a8a8b3;
+            --accent-green: #00b37e;
+            --accent-red: #f75a68;
+            --accent-blue: #00b3e6;
+            --border-color: #29292e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 16px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .card h2 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: var(--accent-blue);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .metric-box {
+            background-color: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .badge-buy { background-color: rgba(0, 179, 126, 0.2); color: var(--accent-green); }
+        .badge-sell { background-color: rgba(247, 90, 104, 0.2); color: var(--accent-red); }
+        
+        .btn {
+            background-color: var(--accent-green);
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📈 Radar Bola de Neve</h1>
+    <p class="subtitle">Carteira de Longo Prazo — Construção de Patrimônio da Filha</p>
+
+    <!-- RESUMO DO ECOSSISTEMA -->
+    <div class="card">
+        <h2>💰 Raio-X do Ecossistema</h2>
+        <div class="metric-grid">
+            <div class="metric-box">
+                <div class="metric-value">R$ 498,11</div>
+                <div class="metric-label">Custódia Ativa (XP)</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">R$ 129,82</div>
+                <div class="metric-label">Caixa Disponível</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">R$ 500,00</div>
+                <div class="metric-label">Reserva (Mercado Pago)</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">~R$ 7,30/mês</div>
+                <div class="metric-label">Renda Passiva (Marco 1)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEMÁFORO DE OPORTUNIDADES -->
+    <div class="card">
+        <h2>🎯 Semáforo de Oportunidades (B3)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ativo</th>
+                    <th>Preço Atual</th>
+                    <th>Alvo / Status</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>XPML11</strong></td>
+                    <td>R$ 96,25</td>
+                    <td>≤ R$ 96,50</td>
+                    <td><span class="badge badge-buy">COMPRAR</span></td>
+                </tr>
+                <tr>
+                    <td><strong>BTLG11</strong></td>
+                    <td>R$ 97,90</td>
+                    <td>≤ R$ 98,00</td>
+                    <td><span class="badge badge-buy">COMPRAR</span></td>
+                </tr>
+                <tr>
+                    <td><strong>MXRF11</strong></td>
+                    <td>R$ 8,89</td>
+                    <td>≤ R$ 9,00</td>
+                    <td><span class="badge badge-buy">ACUMULAR</span></td>
+                </tr>
+                <tr>
+                    <td><strong>GARE11</strong></td>
+                    <td>R$ 8,80</td>
+                    <td>≤ R$ 8,90</td>
+                    <td><span class="badge badge-buy">NOVO ALVO</span></td>
+                </tr>
+                <tr>
+                    <td><strong>BBAS3</strong></td>
+                    <td>R$ 16,54</td>
+                    <td>≤ R$ 16,60</td>
+                    <td><span class="badge badge-buy">OPORTUNIDADE</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VVCO11</strong></td>
+                    <td>R$ 10,10</td>
+                    <td>Preço Médio 13,69</td>
+                    <td><span class="badge badge-sell">VENDER (Reciclar)</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PLANO DE SEGUNDA-FEIRA -->
+    <div class="card">
+        <h2>📝 Plano de Aporte (Segunda-feira)</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+            Orçamento total: <b>R$ 310,10</b> (Pix de R$ 170,18 + Caixa R$ 129,82 + Venda VVCO11 R$ 10,10).
+        </p>
+        <ul style="padding-left: 20px; font-size: 0.9rem; line-height: 1.6;">
+            <li><b>1x XPML11</b> (~R$ 96,25)</li>
+            <li><b>1x BTLG11</b> (~R$ 97,90)</li>
+            <li><b>12x MXRF11</b> (~R$ 106,68)</li>
+            <li><b>Troco (< R$ 10)</b>: Mantido para render em caixa ou somar com KISU11.</li>
+        </ul>
+        <button class="btn" onclick="alert('Plano copiado! Vamos executar com disciplina na segunda-feira!')">Registrar Execução Concluída</button>
+    </div>
+
+</div>
+
+</body>
+</html>
