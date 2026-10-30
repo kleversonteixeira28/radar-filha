@@ -57,7 +57,7 @@
     <div id="login-screen" class="card">
         <h2>🔒 Acesso Restrito</h2>
         <p style="color: var(--text-muted); font-size: 0.9rem;">Insira a senha PIN para aceder ao Radar da Filha:</p>
-        <input type="password" id="pin-input" class="input-login" placeholder="Digite a senha">
+        <input type="password" id="pin-input" class="input-login" placeholder="Digite a senha (1928)" onkeypress="if(event.key === 'Enter') verificarSenha()">
         <button class="btn" onclick="verificarSenha()">Entrar no Sistema</button>
         <p id="erro-msg" style="color: var(--accent-red); font-size: 0.85rem; margin-top: 10px; display: none;">Senha incorreta!</p>
     </div>
@@ -104,7 +104,7 @@
                     <tr><th>Status</th><th>Ativo</th><th>Preço Atual</th><th>Alvo Ideal</th><th>Ação</th></tr>
                 </thead>
                 <tbody id="tabela-semaforo">
-                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">A carregar cotações em tempo real...</td></tr>
+                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">A carregar cotações...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -119,13 +119,15 @@
 
 <script>
     const SENHA_MESTRE = "2806";
-    const URL_API_GOOGLE = "https://script.google.com/macros/s/AKfycbxl-4aetmoP0e8M7lD0TNNIJ9zP_9C_tE99N8ODMVhSo-kF2tVHEUXqkdMjvhqNKKpG/exec"; // Cole aqui o link terminado em /exec
+    const URL_API_GOOGLE = "https://script.google.com/macros/s/AKfycbxl-4aetmoP0e8M7lD0TNNIJ9zP_9C_tE99N8ODMVhSo-kF2tVHEUXqkdMjvhqNKKpG/exec";
 
     function verificarSenha() {
-        if (document.getElementById("pin-input").value === SENHA_MESTRE) {
+        let senhaDigitada = document.getElementById("pin-input").value;
+        if (senhaDigitada === SENHA_MESTRE) {
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("app-content").style.display = "block";
-            buscarPrecosERenderizar();
+            carregarCustodia();
+            buscarPrecosReais();
         } else {
             document.getElementById("erro-msg").style.display = "block";
         }
@@ -142,7 +144,7 @@
         { ticker: "GARE11", qtd: 0, preco: 8.80,  alvo: 8.90 }
     ];
 
-    async function buscarPrecosERenderizar() {
+    async function buscarPrecosReais() {
         try {
             let response = await fetch(URL_API_GOOGLE);
             let precosReais = await response.json();
@@ -153,7 +155,7 @@
                 }
             });
         } catch (e) {
-            console.log("Usando preços de fallback locais.");
+            console.log("Mantendo preços padrão de referência local.");
         }
 
         carregarCustodia();
@@ -177,14 +179,14 @@
     }
 
     function carregarSemaforo() {
-        let tbody = document.getElementById("semaforo-tbody") || document.getElementById("tabela-semaforo");
+        let tbody = document.getElementById("tabela-semaforo");
         tbody.innerHTML = "";
         ativos.forEach(item => {
-            if(item.ticker === "RBRY11" || item.ticker === "PSEC11" || item.ticker === "KISU11") return; // Foca nos principais do radar
+            if(item.ticker === "RBRY11" || item.ticker === "PSEC11" || item.ticker === "KISU11") return;
             let isCompra = item.preco <= item.alvo;
             let ledClass = isCompra ? "led-green" : "led-red";
             let badgeClass = isCompra ? "badge-buy" : "badge-sell";
-            let acaoText = isCompra ? "COMPRAR" _ "AGUARDAR";
+            let acaoText = isCompra ? "COMPRAR" : "AGUARDAR";
             if(item.ticker === "VVCO11") { acaoText = "VENDER"; ledClass = "led-red"; badgeClass = "badge-sell"; }
 
             let tr = document.createElement("tr");
