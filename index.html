@@ -34,8 +34,7 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
         th, td { padding: 8px; text-align: left; border-bottom: 1px solid var(--border-color); }
         th { color: var(--text-muted); font-size: 0.75rem; }
-        input[type="text"], input[type="number"] { background-color: #121214; border: 1px solid var(--border-color); color: #fff; padding: 6px; border-radius: 4px; width: 70px; text-align: center; }
-        .input-login { width: 100% !important; padding: 12px !important; font-size: 1.2rem; margin-bottom: 12px; box-sizing: border-box; text-align: center !important; }
+        input[type="number"] { background-color: #121214; border: 1px solid var(--border-color); color: #fff; padding: 6px; border-radius: 4px; width: 70px; text-align: center; }
         .input-caixa { width: 100% !important; padding: 10px !important; font-size: 1.1rem !important; background-color: #121214; border: 1px solid var(--accent-green); color: #fff; border-radius: 6px; box-sizing: border-box; text-align: right; font-weight: bold; }
         .led-green { height: 10px; width: 10px; background-color: var(--accent-green); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--accent-green); animation: piscar 1.5s infinite; }
         .led-red { height: 10px; width: 10px; background-color: var(--accent-red); border-radius: 50%; display: inline-block; }
@@ -45,93 +44,61 @@
         .badge-sell { background-color: rgba(247, 90, 104, 0.2); color: var(--accent-red); }
         .btn { background-color: var(--accent-green); color: #fff; border: none; width: 100%; padding: 12px; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 10px; }
         .btn:hover { opacity: 0.9; }
-        #app-content { display: none; }
-        #login-screen { text-align: center; padding-top: 40px; }
     </style>
 </head>
-<body>
+<body onload="inicializar()">
 
 <div class="container">
+    <h1>📈 Radar Bola de Neve</h1>
+    <p class="subtitle">Carteira de Longo Prazo — Gestão da Filha</p>
 
-    <!-- TELA DE LOGIN -->
-    <div id="login-screen" class="card">
-        <h2>🔒 Acesso Restrito</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Insira a senha PIN (1928):</p>
-        <input type="text" id="pin-input" class="input-login" placeholder="Digite 1928" onkeypress="if(event.key === 'Enter') fazerLogin()">
-        <button class="btn" onclick="fazerLogin()">Entrar no Sistema</button>
-        <p id="erro-msg" style="color: var(--accent-red); font-size: 0.85rem; margin-top: 10px; display: none;">Senha incorreta! Use 1928</p>
+    <div class="card">
+        <h2>💵 Valor Disponível para Aporte</h2>
+        <input type="number" id="valor-disponivel" class="input-caixa" value="310.10" step="0.01" onchange="recalcular()">
     </div>
 
-    <!-- CONTEÚDO DO APLICATIVO -->
-    <div id="app-content">
-        <h1>📈 Radar Bola de Neve</h1>
-        <p class="subtitle">Carteira de Longo Prazo — Gestão da Filha</p>
-
-        <div class="card">
-            <h2>💵 Valor Disponível para Aporte</h2>
-            <input type="number" id="valor-disponivel" class="input-caixa" value="310.10" step="0.01" onchange="recalcular()">
-        </div>
-
-        <div class="card">
-            <h2>💰 Raio-X do Património</h2>
-            <div class="metric-grid">
-                <div class="metric-box">
-                    <div class="metric-value" id="patrimonio-total">R$ 0,00</div>
-                    <div class="metric-label">Patrimônio Total Custódia</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-value" id="renda-mensal">R$ 0,00</div>
-                    <div class="metric-label">Renda Passiva Mensal Est.</div>
-                </div>
+    <div class="card">
+        <h2>💰 Raio-X do Património</h2>
+        <div class="metric-grid">
+            <div class="metric-box">
+                <div class="metric-value" id="patrimonio-total">R$ 0,00</div>
+                <div class="metric-label">Patrimônio Total Custódia</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value" id="renda-mensal">R$ 0,00</div>
+                <div class="metric-label">Renda Passiva Mensal Est.</div>
             </div>
         </div>
-
-        <div class="card">
-            <h2>📊 Suas Cotas e Custódia</h2>
-            <table>
-                <thead>
-                    <tr><th>Ativo</th><th>Qtd</th><th>Preço Ref.</th><th>Total (R$)</th></tr>
-                </thead>
-                <tbody id="tabela-custodia"></tbody>
-            </table>
-            <button class="btn" onclick="recalcular()">Atualizar Valores</button>
-        </div>
-
-        <div class="card">
-            <h2>🎯 Semáforo de Oportunidades</h2>
-            <table>
-                <thead>
-                    <tr><th>Status</th><th>Ativo</th><th>Preço Atual</th><th>Alvo Ideal</th><th>Ação</th></tr>
-                </thead>
-                <tbody id="tabela-semaforo"></tbody>
-            </table>
-        </div>
-
-        <div class="card">
-            <h2>📝 Sugestão de Execução com o Saldo</h2>
-            <p id="sugestao-aporte" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Calculando sugestão...</p>
-        </div>
     </div>
 
+    <div class="card">
+        <h2>📊 Suas Cotas e Custódia</h2>
+        <table>
+            <thead>
+                <tr><th>Ativo</th><th>Qtd</th><th>Preço Ref.</th><th>Total (R$)</th></tr>
+            </thead>
+            <tbody id="tabela-custodia"></tbody>
+        </table>
+        <button class="btn" onclick="recalcular()">Atualizar Valores</button>
+    </div>
+
+    <div class="card">
+        <h2>🎯 Semáforo de Oportunidades</h2>
+        <table>
+            <thead>
+                <tr><th>Status</th><th>Ativo</th><th>Preço Atual</th><th>Alvo Ideal</th><th>Ação</th></tr>
+            </thead>
+            <tbody id="tabela-semaforo"></tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>📝 Sugestão de Execução com o Saldo</h2>
+        <p id="sugestao-aporte" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Calculando sugestão...</p>
+    </div>
 </div>
 
 <script>
-    const SENHA_MESTRE = "2806";
-
-    function fazerLogin() {
-        let valorDigitado = document.getElementById("pin-input").value.trim();
-        if (valorDigitado === SENHA_MESTRE) {
-            document.getElementById("login-screen").style.display = "none";
-            document.getElementById("app-content").style.display = "block";
-            carregarCustodia();
-            carregarSemaforo();
-        } else {
-            let erro = document.getElementById("erro-msg");
-            erro.style.display = "block";
-            erro.innerText = "Senha incorreta! Digitou: " + valorDigitado;
-        }
-    }
-
     let ativos = [
         { ticker: "RBRY11", qtd: 2, preco: 79.98, alvo: 81.00 },
         { ticker: "BBAS3",  qtd: 7, preco: 16.54, alvo: 16.60 },
@@ -142,6 +109,11 @@
         { ticker: "MXRF11", qtd: 0, preco: 8.89,  alvo: 9.00 },
         { ticker: "GARE11", qtd: 0, preco: 8.80,  alvo: 8.90 }
     ];
+
+    function inicializar() {
+        carregarCustodia();
+        carregarSemaforo();
+    }
 
     function carregarCustodia() {
         let tbody = document.getElementById("tabela-custodia");
