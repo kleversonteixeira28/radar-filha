@@ -53,17 +53,16 @@
 
 <div class="container">
 
-    <!-- LOGIN -->
+    <!-- TELA DE LOGIN -->
     <div id="login-screen" class="card">
         <h2>🔒 Acesso Restrito</h2>
         <p style="color: var(--text-muted); font-size: 0.9rem;">Insira a senha PIN (1928):</p>
-        <!-- Alterado para type="text" para ver o que digita e evitar erros -->
-        <input type="text" id="pin-input" class="input-login" placeholder="Digite 1928">
+        <input type="text" id="pin-input" class="input-login" placeholder="Digite 1928" onkeypress="if(event.key === 'Enter') fazerLogin()">
         <button class="btn" onclick="fazerLogin()">Entrar no Sistema</button>
         <p id="erro-msg" style="color: var(--accent-red); font-size: 0.85rem; margin-top: 10px; display: none;">Senha incorreta! Use 1928</p>
     </div>
 
-    <!-- APP -->
+    <!-- CONTEÚDO DO APLICATIVO -->
     <div id="app-content">
         <h1>📈 Radar Bola de Neve</h1>
         <p class="subtitle">Carteira de Longo Prazo — Gestão da Filha</p>
@@ -104,9 +103,7 @@
                 <thead>
                     <tr><th>Status</th><th>Ativo</th><th>Preço Atual</th><th>Alvo Ideal</th><th>Ação</th></tr>
                 </thead>
-                <tbody id="tabela-semaforo">
-                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">A carregar...</td></tr>
-                </tbody>
+                <tbody id="tabela-semaforo"></tbody>
             </table>
         </div>
 
@@ -120,7 +117,6 @@
 
 <script>
     const SENHA_MESTRE = "2806";
-    const URL_API_GOOGLE = "https://script.google.com/macros/s/AKfycbxl-4aetmoP0e8M7lD0TNNIJ9zP_9C_tE99N8ODMVhSo-kF2tVHEUXqkdMjvhqNKKpG/exec";
 
     function fazerLogin() {
         let valorDigitado = document.getElementById("pin-input").value.trim();
@@ -128,7 +124,7 @@
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("app-content").style.display = "block";
             carregarCustodia();
-            buscarPrecosReais();
+            carregarSemaforo();
         } else {
             let erro = document.getElementById("erro-msg");
             erro.style.display = "block";
@@ -146,22 +142,6 @@
         { ticker: "MXRF11", qtd: 0, preco: 8.89,  alvo: 9.00 },
         { ticker: "GARE11", qtd: 0, preco: 8.80,  alvo: 8.90 }
     ];
-
-    async function buscarPrecosReais() {
-        try {
-            let response = await fetch(URL_API_GOOGLE);
-            let precosReais = await response.json();
-            ativos.forEach(item => {
-                if (precosReais[item.ticker]) {
-                    item.preco = parseFloat(precosReais[item.ticker]);
-                }
-            });
-        } catch (e) {
-            console.log("Usando preços locais.");
-        }
-        carregarCustodia();
-        carregarSemaforo();
-    }
 
     function carregarCustodia() {
         let tbody = document.getElementById("tabela-custodia");
