@@ -234,4 +234,37 @@
             let qtdMx = Math.floor((resto / 2) / pMxrf);
             let sobraParaGare = resto - (qtdMx * pMxrf);
             let qtdGare = Math.floor(sobraParaGare / pGare);
-            let trocoFinal = sob
+            let trocoFinal = sobraParaGare - (qtdGare * pGare);
+            let ganhoMensalNovo = 0.92 + 0.81 + (qtdMx * 0.10) + (qtdGare * 0.083);
+
+            txtSugestao = `Com <b>R$ ${disponivel.toFixed(2)}</b> disponíveis, o Combo Ideal é:<br>`;
+            txtSugestao += `• <b>1x XPML11</b> (R$ ${pXpml.toFixed(2)})<br>`;
+            txtSugestao += `• <b>1x BTLG11</b> (R$ ${pBtlg.toFixed(2)})<br>`;
+            if (qtdMx > 0) txtSugestao += `• <b>${qtdMx}x MXRF11</b> (R$ ${(qtdMx * pMxrf).toFixed(2)})<br>`;
+            if (qtdGare > 0) txtSugestao += `• <b>${qtdGare}x GARE11</b> (R$ ${(qtdGare * pGare).toFixed(2)})<br>`;
+            txtSugestao += `• <b>Troco em caixa:</b> R$ ${trocoFinal.toFixed(2)}<br>`;
+            txtSugestao += `<span style="color: var(--accent-green);">⚡ Este aporte adiciona <b>+R$ ${ganhoMensalNovo.toFixed(2)}/mês</b> na Bola de Neve!</span>`;
+        } else if (disponivel >= pXpml) {
+            let resto = disponivel - pXpml;
+            let qtdMx = Math.floor(resto / pMxrf);
+            let trocoFinal = resto - (qtdMx * pMxrf);
+            txtSugestao = `Com <b>R$ ${disponivel.toFixed(2)}</b> disponíveis, priorize:<br>`;
+            txtSugestao += `• <b>1x XPML11</b> (R$ ${pXpml.toFixed(2)})<br>`;
+            if (qtdMx > 0) txtSugestao += `• <b>${qtdMx}x MXRF11</b> (R$ ${(qtdMx * pMxrf).toFixed(2)})<br>`;
+            txtSugestao += `• <b>Troco:</b> R$ ${trocoFinal.toFixed(2)}`;
+        } else if (disponivel >= pGare) {
+            let qtdGare = Math.floor(disponivel / pGare);
+            let qtdMx = Math.floor(disponivel / pMxrf);
+            txtSugestao = `Com <b>R$ ${disponivel.toFixed(2)}</b> (aporte Base 10), você pode comprar:<br>`;
+            txtSugestao += `• Opção A: <b>${qtdMx}x MXRF11</b> (R$ ${(qtdMx * pMxrf).toFixed(2)})<br>`;
+            txtSugestao += `• Opção B: <b>${qtdGare}x GARE11</b> (R$ ${(qtdGare * pGare).toFixed(2)})`;
+        } else {
+            txtSugestao = `<i>Digite um valor acima de R$ ${pGare.toFixed(2)} para calcular as compras.</i>`;
+        }
+
+        document.getElementById("sugestao-aporte").innerHTML = txtSugestao;
+    }
+</script>
+
+</body>
+</html>
